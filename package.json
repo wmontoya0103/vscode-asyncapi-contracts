@@ -1,0 +1,172 @@
+{
+  "name": "asyncapi-contracts",
+  "displayName": "AsyncAPI Contracts",
+  "description": "Read, validate, preview and edit AsyncAPI 3.x contracts in YAML from VS Code / Kiro. Standards-conformant validation and official rendering via @asyncapi/parser and @asyncapi/react-component.",
+  "version": "1.0.0",
+  "publisher": "wmontoya",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wmontoya0103/vscode-asyncapi-contracts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wmontoya0103/vscode-asyncapi-contracts/issues"
+  },
+  "homepage": "https://github.com/wmontoya0103/vscode-asyncapi-contracts#readme",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Visualization",
+    "Snippets"
+  ],
+  "keywords": [
+    "asyncapi",
+    "yaml",
+    "event-driven",
+    "api",
+    "documentation"
+  ],
+  "activationEvents": [
+    "onLanguage:yaml",
+    "onLanguage:plaintext",
+    "onStartupFinished",
+    "onCommand:asyncapiContracts.render",
+    "onCommand:asyncapiContracts.preview",
+    "onCommand:asyncapiContracts.validate",
+    "onCommand:asyncapiContracts.addChannel",
+    "onCommand:asyncapiContracts.addMessage",
+    "onCommand:asyncapiContracts.goToComponent"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "asyncapiContracts.preview",
+        "title": "AsyncAPI: Preview Contract (lightweight)",
+        "category": "AsyncAPI"
+      },
+      {
+        "command": "asyncapiContracts.render",
+        "title": "AsyncAPI: Open Official Render",
+        "category": "AsyncAPI"
+      },
+      {
+        "command": "asyncapiContracts.validate",
+        "title": "AsyncAPI: Validate Contract",
+        "category": "AsyncAPI"
+      },
+      {
+        "command": "asyncapiContracts.addChannel",
+        "title": "AsyncAPI: Add Channel",
+        "category": "AsyncAPI"
+      },
+      {
+        "command": "asyncapiContracts.addMessage",
+        "title": "AsyncAPI: Add Message",
+        "category": "AsyncAPI"
+      },
+      {
+        "command": "asyncapiContracts.goToComponent",
+        "title": "AsyncAPI: Go to Referenced Component",
+        "category": "AsyncAPI"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "asyncapiContracts.render",
+          "when": "asyncapiContracts.isAsyncApiDocument",
+          "group": "navigation@1"
+        },
+        {
+          "command": "asyncapiContracts.preview",
+          "when": "asyncapiContracts.isAsyncApiDocument",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "asyncapiContracts.goToComponent",
+          "when": "asyncapiContracts.isAsyncApiDocument",
+          "group": "navigation@9"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "asyncapiContracts.preview"
+        },
+        {
+          "command": "asyncapiContracts.render"
+        },
+        {
+          "command": "asyncapiContracts.validate"
+        },
+        {
+          "command": "asyncapiContracts.addChannel"
+        },
+        {
+          "command": "asyncapiContracts.addMessage"
+        },
+        {
+          "command": "asyncapiContracts.goToComponent"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AsyncAPI Contracts",
+      "properties": {
+        "asyncapiContracts.validateOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run AsyncAPI validation automatically when a contract is saved."
+        },
+        "asyncapiContracts.validateOnType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run AsyncAPI validation while editing (debounced)."
+        },
+        "asyncapiContracts.suppressRecommendedVersionHint": {
+          "type": "boolean",
+          "default": true,
+          "description": "Hide the informational hint that recommends upgrading to the latest AsyncAPI version (rule 'asyncapi-latest-version')."
+        },
+        "asyncapiContracts.suppressedRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Diagnostic rule codes to hide from the editor (e.g. 'asyncapi-latest-version', 'asyncapi-document-resolved'). The rule code is shown in parentheses on each AsyncAPI diagnostic."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "copy-assets": "node scripts/copy-assets.mjs",
+    "compile": "npm run copy-assets && esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "npm run compile -- --sourcemap --watch",
+    "package": "npm run copy-assets && esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "vsix": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^2.24.0",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@asyncapi/parser": "^3.6.3",
+    "@asyncapi/react-component": "^3.2.1",
+    "yaml": "^2.4.1"
+  }
+}
