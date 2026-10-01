@@ -95,6 +95,28 @@ Consulta **[MANUAL.md](./MANUAL.md)** para el detalle completo.
 | `asyncapiContracts.suppressRecommendedVersionHint` | `true` | Ocultar el aviso que recomienda migrar a la última versión de AsyncAPI (`asyncapi-latest-version`) |
 | `asyncapiContracts.suppressedRules` | `[]` | Lista de códigos de regla a ocultar de los diagnostics |
 
+## Desarrollo
+
+Scripts disponibles para trabajar en la extensión y regenerar el paquete:
+
+| Script | Qué hace |
+| --- | --- |
+| `npm install` | Instala dependencias (necesario la primera vez). |
+| `npm run compile` | Copia los assets del render y compila el bundle (desarrollo). |
+| `npm run watch` | Recompila automáticamente al guardar cambios. |
+| `npm run typecheck` | Comprueba tipos sin generar salida (`tsc --noEmit`). |
+| `npm run package` | Compila el bundle minificado (para producción). |
+| `npm run copy-assets` | Copia manualmente los assets del render oficial a `media/`. |
+| `npm run vsix` | **Regenera el `.vsix`** instalable en la raíz del proyecto. |
+
+Flujo típico para publicar una versión nueva:
+
+1. Sube el número de `version` en `package.json`.
+2. `npm run vsix` genera `asyncapi-contracts-<version>.vsix`.
+3. Instala el nuevo `.vsix` en Kiro / VS Code (ver sección **Instalación**).
+
+Para iterar sin empaquetar, abre el proyecto en VS Code y pulsa `F5` (abre una ventana *Extension Development Host* con la extensión cargada).
+
 ## Licencia
 
 MIT. Usa componentes de AsyncAPI Initiative (`@asyncapi/parser`, `@asyncapi/react-component`), licencia Apache-2.0.
