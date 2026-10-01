@@ -27,15 +27,53 @@ La validación y el render usan los componentes **oficiales** de AsyncAPI (`@asy
 - Node.js 18+ y npm (solo para compilar/empaquetar).
 - VS Code 1.84+ o Kiro.
 
-## Instalación rápida
+## Instalación
+
+### 1. Generar el paquete (`.vsix`)
+
+El `.vsix` **no está incluido en el repositorio** (se excluye en `.gitignore` porque se regenera). Hay que construirlo desde el código:
 
 ```bash
 npm install
 npm run vsix
-code --install-extension asyncapi-contracts-1.0.0.vsix
 ```
 
-Luego recarga la ventana del editor. Consulta **[MANUAL.md](./MANUAL.md)** para el detalle completo.
+Esto genera el archivo en la **raíz del proyecto**, con el nombre `<name>-<version>.vsix` tomado del `package.json`:
+
+```
+<carpeta-del-proyecto>/asyncapi-contracts-1.0.0.vsix
+```
+
+> El nombre cambia con la versión: si subes `version` en `package.json` y vuelves a empaquetar, se generará `asyncapi-contracts-<nueva-version>.vsix`.
+
+### 2. Instalar en VS Code
+
+**Por terminal** (el comando `code` debe apuntar a VS Code):
+
+```bash
+code --install-extension asyncapi-contracts-1.0.0.vsix --force
+```
+
+**Por interfaz:** abre **Extensions** (`Cmd+Shift+X`) → menú `···` → **Install from VSIX…** → selecciona el `.vsix`.
+
+### 3. Instalar en Kiro
+
+**Por terminal** (usa el CLI de Kiro; si no tienes el comando `kiro`, usa la ruta completa `"/Applications/Kiro.app/Contents/Resources/app/bin/code"`):
+
+```bash
+kiro --install-extension asyncapi-contracts-1.0.0.vsix --force
+```
+
+**Por interfaz:** abre la vista **Extensions** → menú `···` → **Install from VSIX…** → selecciona el `.vsix`.
+
+### 4. Recargar
+
+Tras instalar en cualquiera de los dos editores, recarga la ventana:
+`Cmd+Shift+P` → **Developer: Reload Window**.
+
+Si el render oficial no cargara tras una actualización, **cierra y reabre el editor por completo** (el webview puede quedar en caché).
+
+Consulta **[MANUAL.md](./MANUAL.md)** para el detalle completo.
 
 ## Comandos
 
